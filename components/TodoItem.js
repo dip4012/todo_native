@@ -1,15 +1,21 @@
 import { useState } from "react"
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import {
+	StyleSheet,
+	Text,
+	TouchableHighlight,
+	TouchableOpacity,
+	View,
+} from "react-native"
 import { MaterialIcons } from "@expo/vector-icons"
 
 export default function TodoItem({ item, deleteTodo }) {
 	return (
-		<TouchableOpacity onPress={() => deleteTodo(item.id)}>
-			<View style={styles.item}>
-				<Text>{item.text}</Text>
-				<MaterialIcons name="delete" size={24} color="darkred" />
-			</View>
-		</TouchableOpacity>
+		<View style={styles.item}>
+			<Text style={styles.itemText}>{item.text}</Text>
+			<TouchableHighlight onPress={() => deleteTodo(item.id)}>
+				<MaterialIcons name="delete" style={styles.deleteButton} />
+			</TouchableHighlight>
+		</View>
 	)
 }
 
@@ -17,12 +23,28 @@ const styles = StyleSheet.create({
 	item: {
 		flex: 1,
 		flexDirection: "row",
-		justifyContent: "space-between",
-		padding: 16,
+		justifyContent: "space-evenly",
+		alignItems: "center",
 		marginTop: 20,
-		backgroundColor: "#aaaaaa",
+	},
+	itemText: {
+		flex: 1,
+		padding: 14,
+		marginRight: 8,
 		borderRadius: 50,
-		color: "white",
-		fontSize: 16,
+		borderWidth: 0.5,
+		borderStyle: "solid",
+		borderColor: "#EDF2F4",
+		color: "#EDF2F4",
+		fontSize: 14,
+		fontWeight: 300,
+		backgroundColor: "#222334",
+	},
+	deleteButton: {
+		color: "#EDF2F4",
+		fontSize: 24,
+		padding: 12,
+		backgroundColor: "#EF233C",
+		borderRadius: 50,
 	},
 })

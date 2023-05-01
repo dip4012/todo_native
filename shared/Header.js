@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
 	header: {
 		height: 80,
 		paddingTop: 38,
-		backgroundColor: "coral",
+		backgroundColor: "#d90429",
 		borderBottomLeftRadius: 70,
 	},
 	title: {
-		color: "white",
+		color: "#EDF2F4",
 		textAlign: "center",
 		fontSize: 24,
 	},
