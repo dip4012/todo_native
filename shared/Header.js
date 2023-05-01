@@ -14,10 +14,15 @@ export default function Header() {
 
 const styles = StyleSheet.create({
 	header: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		width: "100%",
 		height: 80,
 		paddingTop: 38,
 		backgroundColor: "#d90429",
 		borderBottomLeftRadius: 70,
+		zIndex: 100,
 	},
 	title: {
 		color: "#EDF2F4",

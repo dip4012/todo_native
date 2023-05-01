@@ -4,11 +4,32 @@ import AddTodo from "./addTodo"
 import { useState } from "react"
 import TodoItem from "./TodoItem"
 
-export default function Home() {
+export default function Home({ navigation }) {
 	const [todos, setTodos] = useState([
-		{ text: "buy coffee", id: 1 },
-		{ text: "create an app", id: 2 },
-		{ text: "play with keys", id: 3 },
+		{
+			text: "buy coffee",
+			completed: false,
+			created: "22/04/23",
+			about:
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pharetra massa mollis lorem facilisis, et porta nisl vestibulum. Nulla sit amet sodales nulla. Duis et imperdiet magna. Proin tempor neque at eleifend feugiat. Vestibulum vestibulum sem eu magna finibus porta. Proin eget erat diam. Donec id tincidunt tellus. Ut aliquam, sem sit amet aliquam tempor, ex augue eleifend ex, ut feugiat nisl arcu quis est.",
+			id: 1,
+		},
+		{
+			text: "create an app",
+			completed: true,
+			created: "22/04/23",
+			about:
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pharetra massa mollis lorem facilisis, et porta nisl vestibulum. Nulla sit amet sodales nulla. Duis et imperdiet magna. Proin tempor neque at eleifend feugiat. Vestibulum vestibulum sem eu magna finibus porta. Proin eget erat diam. Donec id tincidunt tellus. Ut aliquam, sem sit amet aliquam tempor, ex augue eleifend ex, ut feugiat nisl arcu quis est.",
+			id: 2,
+		},
+		{
+			text: "play with keys",
+			completed: false,
+			created: "22/04/23",
+			about:
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pharetra massa mollis lorem facilisis, et porta nisl vestibulum. Nulla sit amet sodales nulla. Duis et imperdiet magna. Proin tempor neque at eleifend feugiat. Vestibulum vestibulum sem eu magna finibus porta. Proin eget erat diam. Donec id tincidunt tellus. Ut aliquam, sem sit amet aliquam tempor, ex augue eleifend ex, ut feugiat nisl arcu quis est.",
+			id: 3,
+		},
 	])
 
 	const deleteTodo = (id) => {
@@ -29,13 +50,15 @@ export default function Home() {
 	}
 
 	return (
-		<View style={[globalStyles.container, { backgroundColor: "#2b2d42" }]}>
+		<View style={globalStyles.container}>
 			{/* <AddTodo addTodo={addTodo} /> */}
 
 			<View style={styles.todoList}>
 				<FlatList
 					data={todos}
-					renderItem={({ item }) => <TodoItem item={item} deleteTodo={deleteTodo} />}
+					renderItem={({ item }) => (
+						<TodoItem item={item} deleteTodo={deleteTodo} navigation={navigation} />
+					)}
 					keyExtractor={(item) => item.id}
 				/>
 			</View>

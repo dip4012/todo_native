@@ -1,20 +1,22 @@
 import { useState } from "react"
-import {
-	StyleSheet,
-	Text,
-	TouchableHighlight,
-	TouchableOpacity,
-	View,
-} from "react-native"
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { MaterialIcons } from "@expo/vector-icons"
 
-export default function TodoItem({ item, deleteTodo }) {
+export default function TodoItem({ item, deleteTodo, navigation }) {
+	console.log(item)
 	return (
 		<View style={styles.item}>
-			<Text style={styles.itemText}>{item.text}</Text>
-			<TouchableHighlight onPress={() => deleteTodo(item.id)}>
-				<MaterialIcons name="delete" style={styles.deleteButton} />
-			</TouchableHighlight>
+			<TouchableOpacity
+				style={{ flex: 1 }}
+				onPress={() => navigation.navigate("TodoDetails", item)}
+			>
+				<Text style={styles.itemText}>{item.text}</Text>
+			</TouchableOpacity>
+			<TouchableOpacity onPress={() => deleteTodo(item.id)}>
+				<View style={{ borderRadius: 50 }}>
+					<MaterialIcons name="delete" style={styles.deleteButton} />
+				</View>
+			</TouchableOpacity>
 		</View>
 	)
 }
