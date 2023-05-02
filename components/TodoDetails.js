@@ -3,10 +3,10 @@ import { globalStyles } from "../shared/global"
 import Card from "../shared/Card"
 import { MaterialIcons } from "@expo/vector-icons"
 import { Fontisto } from "@expo/vector-icons"
+import CustomButton from "../shared/CustomButton"
 
-export default function TodoDetails({ route }) {
+export default function TodoDetails({ route, navigation }) {
 	const item = route.params
-	console.log(item)
 	return (
 		<View style={globalStyles.container}>
 			<Card>
@@ -43,6 +43,29 @@ export default function TodoDetails({ route }) {
 					</View>
 				</View>
 				<Text style={styles.about}>{item.about}</Text>
+				<View style={styles.buttonGroup}>
+					{!item.completed && (
+						<CustomButton
+							backgroundColor={"#90be6d"}
+							onPressHandler={() => {
+								item.completeTodo(item.id)
+								navigation.goBack()
+							}}
+						>
+							<MaterialIcons name="done" size={24} color="#EDF2F4" />
+						</CustomButton>
+					)}
+					<View style={{ flex: 1 }} />
+					<CustomButton
+						backgroundColor={"#c81d25"}
+						onPressHandler={() => {
+							item.deleteTodo(item.id)
+							navigation.goBack()
+						}}
+					>
+						<MaterialIcons name="delete" size={24} color="#EDF2F4" />
+					</CustomButton>
+				</View>
 			</Card>
 		</View>
 	)
@@ -101,5 +124,12 @@ const styles = StyleSheet.create({
 		color: "#EDF2F4",
 		fontSize: 16,
 		fontWeight: 200,
+	},
+	buttonGroup: {
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		gap: 20,
+		marginTop: 20,
 	},
 })

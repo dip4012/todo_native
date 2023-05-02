@@ -1,14 +1,19 @@
-import { useState } from "react"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { MaterialIcons } from "@expo/vector-icons"
 
-export default function TodoItem({ item, deleteTodo, navigation }) {
-	console.log(item)
+export default function TodoItem({
+	item,
+	deleteTodo,
+	completeTodo,
+	navigation,
+}) {
 	return (
 		<View style={styles.item}>
 			<TouchableOpacity
 				style={{ flex: 1 }}
-				onPress={() => navigation.navigate("TodoDetails", item)}
+				onPress={() =>
+					navigation.navigate("TodoDetails", { ...item, deleteTodo, completeTodo })
+				}
 			>
 				<Text style={styles.itemText}>{item.text}</Text>
 			</TouchableOpacity>
@@ -46,7 +51,7 @@ const styles = StyleSheet.create({
 		color: "#EDF2F4",
 		fontSize: 24,
 		padding: 12,
-		backgroundColor: "#EF233C",
+		backgroundColor: "#c81d25",
 		borderRadius: 50,
 	},
 })

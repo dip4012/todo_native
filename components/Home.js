@@ -49,6 +49,15 @@ export default function Home({ navigation }) {
 		}
 	}
 
+	const completeTodo = (id) => {
+		setTodos((prevTodos) =>
+			prevTodos.map((todo) => ({
+				...todo,
+				completed: todo.id === id ? !todo.completed : todo.completed,
+			}))
+		)
+	}
+
 	return (
 		<View style={globalStyles.container}>
 			{/* <AddTodo addTodo={addTodo} /> */}
@@ -57,7 +66,12 @@ export default function Home({ navigation }) {
 				<FlatList
 					data={todos}
 					renderItem={({ item }) => (
-						<TodoItem item={item} deleteTodo={deleteTodo} navigation={navigation} />
+						<TodoItem
+							item={item}
+							deleteTodo={deleteTodo}
+							completeTodo={completeTodo}
+							navigation={navigation}
+						/>
 					)}
 					keyExtractor={(item) => item.id}
 				/>
