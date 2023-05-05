@@ -3,6 +3,7 @@ import { MaterialIcons } from "@expo/vector-icons"
 
 export default function TodoItem({
 	item,
+	editTodo,
 	deleteTodo,
 	completeTodo,
 	navigation,
@@ -14,6 +15,7 @@ export default function TodoItem({
 				onPress={() =>
 					navigation.navigate("TodoDetails", {
 						...item,
+						editTodo: editTodo,
 						deleteTodo: deleteTodo,
 						completeTodo: completeTodo,
 					})

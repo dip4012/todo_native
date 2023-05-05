@@ -18,6 +18,8 @@ export default function AddEditModal({
 	modalVisible,
 	setModalVisible,
 	onSubmitHandler,
+	initialValues,
+	mode,
 }) {
 	return (
 		<Modal
@@ -35,7 +37,7 @@ export default function AddEditModal({
 				</Pressable>
 
 				<Formik
-					initialValues={{ text: "", about: "" }}
+					initialValues={mode === "edit" ? initialValues : { text: "", about: "" }}
 					onSubmit={(values, actions) => {
 						onSubmitHandler(values)
 						actions.resetForm()
@@ -83,7 +85,9 @@ export default function AddEditModal({
 										onPressHandler={props.handleSubmit}
 									>
 										<MaterialIcons name="add-task" style={styles.buttonIcon} />
-										<Text style={styles.buttonText}>Add</Text>
+										<Text style={styles.buttonText}>
+											{mode === "edit" ? "Done" : "Add"}
+										</Text>
 									</CustomButton>
 								</View>
 							</View>

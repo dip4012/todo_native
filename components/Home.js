@@ -51,6 +51,12 @@ export default function Home({ navigation }) {
 		])
 	}
 
+	const editTodo = (values) => {
+		setTodos((prevTodos) =>
+			prevTodos.map((todo) => (todo.id === values.id ? values : todo))
+		)
+	}
+
 	const completeTodo = (id) => {
 		setTodos((prevTodos) =>
 			prevTodos.map((todo) => ({
@@ -86,6 +92,7 @@ export default function Home({ navigation }) {
 					renderItem={({ item }) => (
 						<TodoItem
 							item={item}
+							editTodo={editTodo}
 							deleteTodo={deleteTodo}
 							completeTodo={completeTodo}
 							navigation={navigation}

@@ -4,7 +4,6 @@ import Card from "../shared/Card"
 import { MaterialIcons } from "@expo/vector-icons"
 import { Fontisto } from "@expo/vector-icons"
 import CustomButton from "../shared/CustomButton"
-import { TouchableOpacity } from "react-native-gesture-handler"
 import { useState } from "react"
 import AddEditModal from "../shared/AddEditModal"
 
@@ -19,13 +18,18 @@ export default function TodoDetails({ route, navigation }) {
 					{ backgroundColor: pressed ? "#560bad" : "#7b2cbf" },
 					styles.editButton,
 				]}
-				onPress={() => {}}
+				onPress={() => {
+					setModalVisible(true)
+				}}
 			>
 				<MaterialIcons name="edit" size={24} color="#EDF2F4" />
 			</Pressable>
 			<AddEditModal
 				modalVisible={modalVisible}
 				setModalVisible={setModalVisible}
+				onSubmitHandler={item.editTodo}
+				initialValues={item}
+				mode={"edit"}
 			/>
 			<Card>
 				<Text style={styles.title}>{item.text}</Text>
