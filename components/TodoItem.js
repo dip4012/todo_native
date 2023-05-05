@@ -12,15 +12,21 @@ export default function TodoItem({
 			<TouchableOpacity
 				style={{ flex: 1 }}
 				onPress={() =>
-					navigation.navigate("TodoDetails", { ...item, deleteTodo, completeTodo })
+					navigation.navigate("TodoDetails", {
+						...item,
+						deleteTodo: deleteTodo,
+						completeTodo: completeTodo,
+					})
 				}
 			>
-				<Text style={styles.itemText}>{item.text}</Text>
-			</TouchableOpacity>
-			<TouchableOpacity onPress={() => deleteTodo(item.id)}>
-				<View style={{ borderRadius: 50 }}>
-					<MaterialIcons name="delete" style={styles.deleteButton} />
-				</View>
+				<Text
+					style={[
+						styles.itemText,
+						item.completed ? styles.itemCompleted : styles.itemPending,
+					]}
+				>
+					{item.text}
+				</Text>
 			</TouchableOpacity>
 		</View>
 	)
@@ -37,21 +43,19 @@ const styles = StyleSheet.create({
 	itemText: {
 		flex: 1,
 		padding: 14,
-		marginRight: 8,
 		borderRadius: 50,
 		borderWidth: 0.5,
 		borderStyle: "solid",
-		borderColor: "#EDF2F4",
-		color: "#EDF2F4",
 		fontSize: 14,
 		fontWeight: 300,
 		backgroundColor: "#222334",
 	},
-	deleteButton: {
-		color: "#EDF2F4",
-		fontSize: 24,
-		padding: 12,
-		backgroundColor: "#c81d25",
-		borderRadius: 50,
+	itemCompleted: {
+		borderColor: "#99d98c",
+		color: "#99d98c",
+	},
+	itemPending: {
+		borderColor: "#ffba08",
+		color: "#ffba08",
 	},
 })

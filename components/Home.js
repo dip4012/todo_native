@@ -1,10 +1,13 @@
-import { FlatList, StyleSheet, View } from "react-native"
+import { FlatList, Pressable, StyleSheet, View } from "react-native"
 import { globalStyles } from "../shared/global"
-import AddTodo from "./addTodo"
 import { useState } from "react"
 import TodoItem from "./TodoItem"
+import moment from "moment"
+import { MaterialIcons } from "@expo/vector-icons"
+import AddEditModal from "../shared/AddEditModal"
 
 export default function Home({ navigation }) {
+	const [modalVisible, setModalVisible] = useState(false)
 	const [todos, setTodos] = useState([
 		{
 			text: "buy coffee",
@@ -36,17 +39,16 @@ export default function Home({ navigation }) {
 		setTodos((prevTodos) => prevTodos.filter((todo) => todo.id != id))
 	}
 
-	const addTodo = (text) => {
-		if (text.length > 3) {
-			setTodos((prevTodos) => [
-				...prevTodos,
-				{ text: text, id: prevTodos.length + 1 },
-			])
-		} else {
-			Alert.alert("Ooops!!", "Todo must be atleast 4 characters in length", [
-				{ text: "Understood", onPress: () => {} },
-			])
-		}
+	const addTodo = (values) => {
+		setTodos((prevTodos) => [
+			...prevTodos,
+			{
+				...values,
+				completed: false,
+				created: moment().format("D/MM/YYYY"),
+				id: prevTodos.length + 1,
+			},
+		])
 	}
 
 	const completeTodo = (id) => {
@@ -60,7 +62,23 @@ export default function Home({ navigation }) {
 
 	return (
 		<View style={globalStyles.container}>
-			{/* <AddTodo addTodo={addTodo} /> */}
+			<Pressable
+				style={({ pressed }) => [
+					{ backgroundColor: pressed ? "#ef233c" : "#d90429" },
+					styles.addButton,
+				]}
+				onPress={() => {
+					setModalVisible(true)
+				}}
+			>
+				<MaterialIcons name="add" size={32} color="#EDF2F4" />
+			</Pressable>
+
+			<AddEditModal
+				modalVisible={modalVisible}
+				setModalVisible={setModalVisible}
+				onSubmitHandler={addTodo}
+			/>
 
 			<View style={styles.todoList}>
 				<FlatList
@@ -84,5 +102,14 @@ const styles = StyleSheet.create({
 	todoList: {
 		flex: 1,
 		marginTop: 10,
+	},
+	addButton: {
+		position: "absolute",
+		right: 20,
+		bottom: 20,
+		padding: 15,
+		borderRadius: 50,
+		zIndex: 100,
+		elevation: 5,
 	},
 })

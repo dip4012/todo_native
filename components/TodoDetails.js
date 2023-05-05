@@ -1,14 +1,32 @@
-import { StyleSheet, Text, View } from "react-native"
+import { Pressable, StyleSheet, Text, View } from "react-native"
 import { globalStyles } from "../shared/global"
 import Card from "../shared/Card"
 import { MaterialIcons } from "@expo/vector-icons"
 import { Fontisto } from "@expo/vector-icons"
 import CustomButton from "../shared/CustomButton"
+import { TouchableOpacity } from "react-native-gesture-handler"
+import { useState } from "react"
+import AddEditModal from "../shared/AddEditModal"
 
 export default function TodoDetails({ route, navigation }) {
+	const [modalVisible, setModalVisible] = useState(false)
 	const item = route.params
+
 	return (
 		<View style={globalStyles.container}>
+			<Pressable
+				style={({ pressed }) => [
+					{ backgroundColor: pressed ? "#560bad" : "#7b2cbf" },
+					styles.editButton,
+				]}
+				onPress={() => {}}
+			>
+				<MaterialIcons name="edit" size={24} color="#EDF2F4" />
+			</Pressable>
+			<AddEditModal
+				modalVisible={modalVisible}
+				setModalVisible={setModalVisible}
+			/>
 			<Card>
 				<Text style={styles.title}>{item.text}</Text>
 				<View style={styles.info}>
@@ -72,6 +90,16 @@ export default function TodoDetails({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+	editButton: {
+		position: "absolute",
+		left: 10,
+		top: 135,
+		width: 49.5,
+		padding: 10,
+		borderTopLeftRadius: 10,
+		borderBottomLeftRadius: 10,
+		zIndex: 100,
+	},
 	title: {
 		fontSize: 40,
 		fontWeight: 800,

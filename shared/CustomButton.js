@@ -16,6 +16,8 @@ export default function CustomButton({
 
 const styles = StyleSheet.create({
 	buttton: {
+		flexDirection: "row",
+		gap: 10,
 		padding: 16,
 		borderRadius: 50,
 	},
