@@ -6,10 +6,15 @@ import { Fontisto } from "@expo/vector-icons"
 import CustomButton from "../shared/CustomButton"
 import { useState } from "react"
 import AddEditModal from "../shared/AddEditModal"
+import { useDispatch, useSelector } from "react-redux"
+import { completeTodo, deleteTodo } from "../redux/todoSlice"
 
 export default function TodoDetails({ route, navigation }) {
 	const [modalVisible, setModalVisible] = useState(false)
-	const item = route.params
+	const item = useSelector((state) =>
+		state.todos.filter((todo) => todo.id === route.params.itemId)
+	)[0]
+	const dispatch = useDispatch()
 
 	return (
 		<View style={globalStyles.container}>
@@ -27,15 +32,13 @@ export default function TodoDetails({ route, navigation }) {
 			<AddEditModal
 				modalVisible={modalVisible}
 				setModalVisible={setModalVisible}
-				onSubmitHandler={item.editTodo}
-				initialValues={item}
-				mode={"edit"}
+				itemId={item && item.id}
 			/>
 			<Card>
-				<Text style={styles.title}>{item.text}</Text>
+				<Text style={styles.title}>{item && item.text}</Text>
 				<View style={styles.info}>
 					<View style={styles.status}>
-						{item.completed ? (
+						{item && item.completed ? (
 							<MaterialIcons
 								name="check-circle"
 								size={24}
@@ -51,7 +54,7 @@ export default function TodoDetails({ route, navigation }) {
 							/>
 						)}
 						<Text style={styles.statusText}>
-							{item.completed ? "Completed" : "Pending"}
+							{item && item.completed ? "Completed" : "Pending"}
 						</Text>
 					</View>
 					<View style={styles.created}>
@@ -61,16 +64,16 @@ export default function TodoDetails({ route, navigation }) {
 							color="black"
 							style={styles.createdIcon}
 						/>
-						<Text style={styles.createdDate}>{item.created}</Text>
+						<Text style={styles.createdDate}>{item && item.created}</Text>
 					</View>
 				</View>
-				<Text style={styles.about}>{item.about}</Text>
+				<Text style={styles.about}>{item && item.about}</Text>
 				<View style={styles.buttonGroup}>
-					{!item.completed && (
+					{item && !item.completed && (
 						<CustomButton
 							backgroundColor={"#90be6d"}
 							onPressHandler={() => {
-								item.completeTodo(item.id)
+								dispatch(completeTodo(item && item.id))
 								navigation.goBack()
 							}}
 						>
@@ -81,7 +84,7 @@ export default function TodoDetails({ route, navigation }) {
 					<CustomButton
 						backgroundColor={"#c81d25"}
 						onPressHandler={() => {
-							item.deleteTodo(item.id)
+							dispatch(deleteTodo(item && item.id))
 							navigation.goBack()
 						}}
 					>

@@ -13,14 +13,19 @@ import { Formik } from "formik"
 import * as yup from "yup"
 import CustomButton from "./CustomButton"
 import { MaterialIcons } from "@expo/vector-icons"
+import { useDispatch, useSelector } from "react-redux"
+import { addTodo, editTodo } from "../redux/todoSlice"
 
 export default function AddEditModal({
 	modalVisible,
 	setModalVisible,
-	onSubmitHandler,
-	initialValues,
-	mode,
+	itemId,
 }) {
+	const dispatch = useDispatch()
+	const todo = itemId
+		? useSelector((state) => state.todos.filter((todo) => todo.id === itemId))[0]
+		: { text: "", about: "" }
+
 	return (
 		<Modal
 			animationType={"slide"}
@@ -37,9 +42,9 @@ export default function AddEditModal({
 				</Pressable>
 
 				<Formik
-					initialValues={mode === "edit" ? initialValues : { text: "", about: "" }}
+					initialValues={todo}
 					onSubmit={(values, actions) => {
-						onSubmitHandler(values)
+						itemId ? dispatch(editTodo(values)) : dispatch(addTodo(values))
 						actions.resetForm()
 						setModalVisible(false)
 					}}
@@ -85,9 +90,7 @@ export default function AddEditModal({
 										onPressHandler={props.handleSubmit}
 									>
 										<MaterialIcons name="add-task" style={styles.buttonIcon} />
-										<Text style={styles.buttonText}>
-											{mode === "edit" ? "Done" : "Add"}
-										</Text>
+										<Text style={styles.buttonText}>{itemId ? "Done" : "Add"}</Text>
 									</CustomButton>
 								</View>
 							</View>

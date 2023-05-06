@@ -1,25 +1,16 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import { MaterialIcons } from "@expo/vector-icons"
+import { useSelector } from "react-redux"
 
-export default function TodoItem({
-	item,
-	editTodo,
-	deleteTodo,
-	completeTodo,
-	navigation,
-}) {
+export default function TodoItem({ itemId, navigation }) {
+	const item = useSelector((state) =>
+		state.todos.filter((todo) => todo.id === itemId)
+	)[0]
+
 	return (
 		<View style={styles.item}>
 			<TouchableOpacity
 				style={{ flex: 1 }}
-				onPress={() =>
-					navigation.navigate("TodoDetails", {
-						...item,
-						editTodo: editTodo,
-						deleteTodo: deleteTodo,
-						completeTodo: completeTodo,
-					})
-				}
+				onPress={() => navigation.navigate("TodoDetails", { itemId: item.id })}
 			>
 				<Text
 					style={[

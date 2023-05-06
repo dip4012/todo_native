@@ -1,5 +1,4 @@
 import "react-native-gesture-handler"
-import { useState } from "react"
 import {
 	Keyboard,
 	StyleSheet,
@@ -9,17 +8,21 @@ import {
 import { NavigationContainer } from "@react-navigation/native"
 import Header from "./shared/Header"
 import HomeStack from "./components/HomeStack"
+import { Provider } from "react-redux"
+import store from "./redux/store"
 
 export default function App() {
 	return (
-		<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-			<View style={styles.rootContainer}>
-				<NavigationContainer>
-					<Header />
-					<HomeStack />
-				</NavigationContainer>
-			</View>
-		</TouchableWithoutFeedback>
+		<Provider store={store}>
+			<TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+				<View style={styles.rootContainer}>
+					<NavigationContainer>
+						<Header />
+						<HomeStack />
+					</NavigationContainer>
+				</View>
+			</TouchableWithoutFeedback>
+		</Provider>
 	)
 }
 
